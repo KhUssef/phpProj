@@ -1,5 +1,4 @@
 <?php
-    var_dump($_POST);
     require_once('class/autoload.php');
     session_start();
     $user = new UserRep();

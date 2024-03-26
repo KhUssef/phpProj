@@ -51,6 +51,12 @@ class UserRep{
         $user = $result->fetch(PDO::FETCH_OBJ);
         return $user;
     }
+    public function getuser(int $id){
+        $query = "select * from {$this->table} where id = {$id}";
+        $result = $this->db->query($query);
+        $user = $result->fetch(PDO::FETCH_OBJ);
+        $lol = array($user->fullName, $user->email);
+        return $lol;
+    }
 }
-
 ?>
