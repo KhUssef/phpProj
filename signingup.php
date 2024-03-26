@@ -8,5 +8,9 @@
     if($idk==-1){
         setcookie("error_sign", 'mail', time()+1000);
         header("Location:signup.php");
+    }else{
+        $_SESSION['id'] = $idk;
+        setcookie("id", $idk, time()+1000);
+        header("Location:home.php");
     }
 ?>
