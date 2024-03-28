@@ -24,7 +24,8 @@
             break;
         default :
             $_SESSION['id'] = $idk;
-            setcookie("id", $idk, time()+1000);
+            if($_POST['rememberme']=='on')
+                setcookie("id", $idk, time()+1000);
             header("Location:home.php");
             break;
     }
