@@ -32,9 +32,9 @@
         <div class="body">
             <div class="tabs">
                 <input checked="" value="employee" name="seeking" id="employee" type="radio" class="input" />
-                <label for="employee" class="label">employee</label>
+                <label for="employee" class="label">normal</label>
                 <input value="employer" name="seeking" id="employer" type="radio" class="input" />
-                <label for="employer" class="label">employer</label>
+                <label for="employer" class="label">admin</label>
             </div>
         </div>
         <button class="submit">Submit</button>

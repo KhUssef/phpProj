@@ -8,9 +8,8 @@
   box-sizing: border-box;
 }
 
-.main {
-  margin-left: 20rem;
-}
+/*this is dedicated to the cards (job offers of the site)*/
+
 
 .card {
   display: inline-flex;
@@ -105,6 +104,7 @@
   margin: 0.75rem 0.75rem 0.75rem 0.75rem;
 }
 
+/*this is the header part (dedicated to searches)*/
 header {
   height: 10vh;
   background-color: rgb(37, 37, 37);
@@ -114,6 +114,7 @@ header {
   z-index: 999;
 }
 
+/*this is the searchbar where you can add conditions*/
 .search {
   display: inline-flex;
   align-items: center;
@@ -175,6 +176,7 @@ h4 {
   display: inline;
 }
 
+/*theses are the conditions (the red buttons)*/
 #filters {
   display: inline-flex;
   margin-left: 1vh;
@@ -202,6 +204,8 @@ h4 {
   transform: translateX(35px);
   color: white;
   font-weight: bold;
+  position: relative;
+  left: -20%;
 }
 
 .filter .icon {
@@ -241,6 +245,8 @@ h4 {
   transform: scale(0.8);
 }
 
+/*this is the button that activates the search*/
+
 .cta {
   position: relative;
   margin: auto;
@@ -270,7 +276,7 @@ h4 {
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.05em;
-  color: #234567;
+  color: cadetblue;
 }
 
 .cta svg {

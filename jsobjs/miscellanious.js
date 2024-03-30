@@ -15,3 +15,7 @@ export function findcookie(cookie, source) {
     }
     return '-1';
 }
+export function isvalidsql(text) {
+    const pattern = /^[\s\S]*:\s*(=|!=|>|<|>=|<=)\s*\d+\s*(and|or)?\s*(=|!=|>|<|>=|<=)?\s*\d+$/i;
+    return pattern.test(text);
+}

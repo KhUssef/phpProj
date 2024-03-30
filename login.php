@@ -7,6 +7,21 @@
     <link rel='stylesheet' href='cssobjs/login.css' />
     <title>Document</title>
 </head>
+<?php 
+session_start();
+if(isset($_COOKIE["id"])){
+    if($_COOKIE["id"]==-1){
+        unset($_SESSION['id']);
+        setcookie("id");
+    }else{
+        $_SESSION['id'] = $_COOKIE["id"];
+        header('Location:home.php');
+    }
+    if(isset($_SESSION['id'])){
+        header('Location:home.php');
+    }
+}
+    ?>
 
 <body>
     <form class="form" action="loggingin.php" method="post" enctype="multipart/form-data">
@@ -58,7 +73,7 @@
         <button class="button-submit">Sign In</button>
         <p class="p">Don't have an account? <a href="signup.php"><span class="span">Sign Up</span> </a>
     </form>
-    <script src="login.js"></script>
+    <script src="jsobjs/login.js"></script>
 </body>
 
 </html>

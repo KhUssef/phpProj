@@ -11,9 +11,16 @@
 body {
 
     height: 100vh;
-    background-color: #e4e3e8;
     font-family: Poppins, sans-serif;
     position: relative;
+    background-color: #313131;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.171) 2px, transparent 0);
+    background-size: 30px 30px;
+    background-position: -5px -5px;
+}
+
+.main {
+    margin-left: 20rem;
 }
 
 button,
@@ -27,7 +34,7 @@ li {
 .sidebar {
     position: fixed;
     width: 5rem;
-    height: 90vh;
+    height: 100vh;
     background-color: #ffffff;
     padding: 1rem 0.75rem;
     border-radius: 0.75rem;

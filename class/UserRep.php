@@ -45,18 +45,16 @@ class UserRep{
             return $id;
         }
     }
-    public function test(){
-        $query = "insert into {$this->table} values(3, 'teste', 'lol', 'idk', 'employee')";
-        $result = $this->db->query($query);
-        $user = $result->fetch(PDO::FETCH_OBJ);
-        return $user;
-    }
     public function getuser(int $id){
         $query = "select * from {$this->table} where id = {$id}";
         $result = $this->db->query($query);
         $user = $result->fetch(PDO::FETCH_OBJ);
-        $lol = array($user->fullName, $user->email);
+        $lol = array($user->fullName, $user->email, $user->exp1, $user->exp2, $user->exp3, $user->exp4, $user->type);
         return $lol;
+    }
+    public function test(){
+        $query = "delete from {$this->table} where id=3";
+        $result = $this->db->query($query);
     }
 }
 ?>
