@@ -51,11 +51,11 @@ $exps = new expRep();
                 <img src="./assets/history.svg" alt="history">
                 <span class="hidden">History</span>
             </a>
-            <a class="link" title='Notifications' href='notification.php'>
-                <img src="./assets/notification.svg" alt="notifications">
-                <span class="hidden">Notifications</span>
+            <a class="link" title='new post' href='new.php'>
+                <img src="./assets/new.svg" alt="new post">
+                <span class="hidden">New Post</span>
             </a>
-            <a class="link" title='Messages' href='message.php'>
+            <a class="link" title='Messages' href='messages.php'>
                 <img src="./assets/message.svg" alt="messages">
                 <span class="hidden">contact us</span>
             </a>
@@ -85,32 +85,39 @@ $exps = new expRep();
         </div>
     </nav>
     <div class="main">
-        <div class="headercard <?= $job->state ?>card">
-            <h1>
-                <?= $job->state ?>
-            </h1>
-        </div>
-        <div class="infocard">
-            <h1 class="titlecard">
-                <?= $job->name ?>
-            </h1>
-            <p>
-            <h4>Price :
-                <?= $job->price ?> $
-            </h4>
-            </p>
-            <p class='description'>
-                <?= $job->description ?>
-            </p>
-            <p class="tagcard">requirements : #
-                <?= $exps->getexp($job->req1) ?> years #
-                <?= $exps->getexp($job->req1) ?>
-                years
-            </p>
-            <a href='apply.php?id=<?= $job->id ?>'><button type="button" class="actioncard">apply
-                </button></a>
-            <a href='remove.php?id=<?= $job->id ?>'> <button type="button" class="actioncard delete">Delete
-                </button></a>
+        <div class="card">
+            <div class="headercard <?= $job->state ?>card">
+                <h1>
+                    <?= $job->state ?>
+                </h1>
+            </div>
+            <div class="infocard">
+                <h1 class="titlecard">
+                    <?= $job->name ?>
+                </h1>
+                <p>
+                <h4>Price :
+                    <?= $job->price ?> $
+                </h4>
+                </p>
+                <p class='description'>
+                    <?= $job->description ?>
+                </p>
+                <p class="tagcard">requirements : #
+                    <?= $exps->getexp($job->req1) ?> years #
+                    <?= $exps->getexp($job->req1) ?>
+                    years
+                </p>
+                <?php if ($_SESSION['id'] != $job->master) { ?>
+                <a href='apply.php?id=<?= $job->id ?>'><button type="button" class="actioncard">apply
+                    </button></a>
+                <?php } else { ?>
+                <a href='applicants.php?id=<?= $job->id ?>'><button type="button" class="actioncard">check applicants
+                    </button></a>
+                <?php } ?>
+                <a href='remove.php?id=<?= $job->id ?>'> <button type="button" class="actioncard delete">accept
+                    </button></a>
+            </div>
         </div>
     </div>
     </div>

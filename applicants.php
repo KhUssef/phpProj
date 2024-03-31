@@ -1,29 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
 <?php
 require_once ('class/autoload.php');
 session_start();
-if (!isset($_SESSION['id'])) {
+if (isset($_COOKIE["id"])) {
+    if ($_COOKIE["id"] == -1) {
+        unset($_SESSION['id']);
+        setcookie("id");
+    } else {
+        $_SESSION['id'] = $_COOKIE["id"];
+    }
+
+}
+if (!isset($_SESSION['id']) or !$_GET['id'] == $_SESSION['id']) {
     header('Location:login.php');
 }
 $users = new UserRep();
 $user = $users->getuser($_SESSION['id']);
+$jobs = new jobRep();
+$job = $jobs->getjobbyid($_GET['id']);
+$exps = new expRep();
+$apps = new AppRep();
+$applist = $apps->getappsbyid($_GET['id']);
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link rel="stylesheet" href="cssobjs/messages.css" />
-    <link rel='stylesheet' href='cssobjs/sidebar.css' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/assets/logo.svg">
-    <title>tanit</title>
-    <script src='jsobjs/sidebar.js' type="module" defer></script>
-</head>
+    <link rel='stylesheet' href='cssobjs/sidebar.css' />
+    <link rel='stylesheet' href='cssobjs/applicants.css' />
 
-<body>
+    <script src="jsobjs/sidebar.js" type="module" defer></script>
+    <title>Details</title>
     <nav class='sidebar'>
         <div class="sidebar-header">
             <a class="logo-wrapper">
@@ -35,12 +43,13 @@ $user = $users->getuser($_SESSION['id']);
             </button>
         </div>
 
+
         <div class="sidebar-links">
-            <a class="link " href='home.php'>
+            <a class="link" href='home.php'>
                 <img src="./assets/home.svg" alt="">
                 <span class="hidden">Home</span>
             </a>
-            <a class="link " title='History' href='history.php'>
+            <a class="link" title='History' href='history.php'>
                 <img src="./assets/history.svg" alt="history">
                 <span class="hidden">History</span>
             </a>
@@ -48,7 +57,7 @@ $user = $users->getuser($_SESSION['id']);
                 <img src="./assets/new.svg" alt="new post">
                 <span class="hidden">New Post</span>
             </a>
-            <a class="link active " title='Messages' href='messages.php'>
+            <a class="link" title='Messages' href='messages.php'>
                 <img src="./assets/message.svg" alt="messages">
                 <span class="hidden">contact us</span>
             </a>
@@ -77,17 +86,37 @@ $user = $users->getuser($_SESSION['id']);
             </div>
         </div>
     </nav>
-    <div class='main'>
-        <form class="form" action="https://api.web3forms.com/submit" method="POST">
-            <input type="hidden" name="access_key" value="eaeb0a12-ae06-4eaf-bf21-4dab047952b8">
-            <div class="title">Contact us</div>
-            <input type="email" placeholder="Your email" value="<?= $user[1] ?>" class="input" name='email'>
-            <input type="text" placeholder="Your full name" value="<?= $user[0] ?>" class="input" name='name'>
-            <textarea placeholder="Your message" name='message'></textarea>
-            <input type="hidden" name="redirect" value="thankyou.php">
-            <button>Submit</button>
-        </form>
+    <div class="main">
+        <?php for ($i = 0; $i < count($applist); $i++) {
+            $app = $users->getuser($applist[$i]); ?>
+        <div class="card">
+            <div class="infocard">
+                <h1 class="titlecard">
+                    <?= $app[0] ?>
+                </h1>
+                <p>
+                </p>
+                <p class='description'>
+                    <?= $app[1] ?>
+                </p>
+                <p class="tagcard">experience : #
+                    <?= $exps->getexp($app[2]) ?> years #
+                    <?= $exps->getexp($app[3]) ?> years #
+                    <?= $exps->getexp($app[4]) ?> years #
+                    <?= $exps->getexp($app[5]) ?> years
+                </p>
+                <a href='accept.php?jid=<?= $job->id ?>&uid=<?= $applist[$i] ?>'> <button type="button"
+                        class="actioncard ">accept
+                    </button></a>
+            </div>
+        </div>
+        <?php } ?>
     </div>
+    </div>
+</head>
+
+<body>
+
 </body>
 
 </html>

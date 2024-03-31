@@ -1,6 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
 <?php
 require_once ('class/autoload.php');
 session_start();
+if (isset($_COOKIE["id"])) {
+    if ($_COOKIE["id"] == -1) {
+        unset($_SESSION['id']);
+        setcookie("id");
+    } else {
+        $_SESSION['id'] = $_COOKIE["id"];
+    }
+
+}
 if (!isset($_SESSION['id'])) {
     header('Location:login.php');
 }
@@ -8,22 +19,14 @@ $users = new UserRep();
 $user = $users->getuser($_SESSION['id']);
 ?>
 
-
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link rel="stylesheet" href="cssobjs/messages.css" />
-    <link rel='stylesheet' href='cssobjs/sidebar.css' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/assets/logo.svg">
-    <title>tanit</title>
-    <script src='jsobjs/sidebar.js' type="module" defer></script>
-</head>
+    <link rel='stylesheet' href='cssobjs/sidebar.css' />
+    <link rel='stylesheet' href='cssobjs/new.css' />
 
-<body>
+    <script src="jsobjs/sidebar.js" type="module" defer></script>
+    <title>Details</title>
     <nav class='sidebar'>
         <div class="sidebar-header">
             <a class="logo-wrapper">
@@ -35,12 +38,13 @@ $user = $users->getuser($_SESSION['id']);
             </button>
         </div>
 
+
         <div class="sidebar-links">
-            <a class="link " href='home.php'>
+            <a class="link" href='home.php'>
                 <img src="./assets/home.svg" alt="">
                 <span class="hidden">Home</span>
             </a>
-            <a class="link " title='History' href='history.php'>
+            <a class="link" title='History' href='history.php'>
                 <img src="./assets/history.svg" alt="history">
                 <span class="hidden">History</span>
             </a>
@@ -48,7 +52,7 @@ $user = $users->getuser($_SESSION['id']);
                 <img src="./assets/new.svg" alt="new post">
                 <span class="hidden">New Post</span>
             </a>
-            <a class="link active " title='Messages' href='messages.php'>
+            <a class="link" title='Messages' href='messages.php'>
                 <img src="./assets/message.svg" alt="messages">
                 <span class="hidden">contact us</span>
             </a>
@@ -77,17 +81,18 @@ $user = $users->getuser($_SESSION['id']);
             </div>
         </div>
     </nav>
-    <div class='main'>
-        <form class="form" action="https://api.web3forms.com/submit" method="POST">
-            <input type="hidden" name="access_key" value="eaeb0a12-ae06-4eaf-bf21-4dab047952b8">
-            <div class="title">Contact us</div>
-            <input type="email" placeholder="Your email" value="<?= $user[1] ?>" class="input" name='email'>
-            <input type="text" placeholder="Your full name" value="<?= $user[0] ?>" class="input" name='name'>
-            <textarea placeholder="Your message" name='message'></textarea>
-            <input type="hidden" name="redirect" value="thankyou.php">
-            <button>Submit</button>
+    <div class="main">
+        <form class='card' action="">
+            <p>
+                fndslnbkfd
+            </p>
         </form>
     </div>
+    </div>
+</head>
+
+<body>
+
 </body>
 
 </html>

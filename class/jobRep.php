@@ -46,9 +46,9 @@ class jobRep
                 $query = $query . " description like '%{$temp}%' and ";
             } else {
                 if (strpos($temp, 'and')) {
-                    $exp = "(price " . substr($temp, 0, strpos($temp, 'and') + 3) . " price " . substr($temp, strpos($temp, 'and') + 3, strlen($temp)) . ')';
+                    $exp = "(price " . substr($temp, 0, strpos($temp, 'and')) . ' and ' . " price " . substr($temp, strpos($temp, 'and') + 3, strlen($temp)) . ')';
                 } else if (strpos($temp, 'or')) {
-                    $exp = '(price ' . substr($temp, 0, strpos($temp, 'or') + 2) . ' price ' . substr($temp, strpos($temp, 'or') + 3, strlen($temp)) . ')';
+                    $exp = '(price ' . substr($temp, 0, strpos($temp, 'or')) . ' or ' . ' price ' . substr($temp, strpos($temp, 'or') + 3, strlen($temp)) . ')';
                 } else {
                     $exp = 'price ' . ' ' . $temp;
                 }
@@ -91,5 +91,10 @@ class jobRep
         $res = $this->db->query($query);
         $job = $res->fetchAll(PDO::FETCH_OBJ);
         return $job;
+    }
+    public function done($jid, $uid)
+    {
+        $query = "update {$this->table} set state='inactive', employee = {$uid} where id = {$jid} ";
+        $res = $this->db->query($query);
     }
 }

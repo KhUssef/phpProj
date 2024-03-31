@@ -48,11 +48,11 @@ $joblist = $jobs->getjobbymaster($_SESSION['id']);
                 <img src="./assets/history.svg" alt="history">
                 <span class="hidden">History</span>
             </a>
-            <a class="link" title='Notifications' href='notification.php'>
-                <img src="./assets/notification.svg" alt="notifications">
-                <span class="hidden">Notifications</span>
+            <a class="link" title='new post' href='new.php'>
+                <img src="./assets/new.svg" alt="new post">
+                <span class="hidden">New Post</span>
             </a>
-            <a class="link" title='Messages' href='message.php'>
+            <a class="link" title='Messages' href='messages.php'>
                 <img src="./assets/message.svg" alt="messages">
                 <span class="hidden">contact us</span>
             </a>
@@ -86,36 +86,36 @@ $joblist = $jobs->getjobbymaster($_SESSION['id']);
             <?php
             foreach ($joblist as $job):
                 ?>
-                <li>
-                    <div class="card">
-                        <div class="headercard <?= $job->state ?>card">
-                            <h1>
-                                <?= $job->state ?>
-                            </h1>
-                        </div>
-                        <div class="infocard">
-                            <p class="titlecard">
-                                <?= $job->name ?>
-                            </p>
-                            <p>
-                            <h4>Price : </h4>
-                            <?= $job->price ?>
-                            <h4> $</h4>
-                            </p>
-                            <p>
-                                <?= $jobs->formatdesc($job->description) ?>
-                            </p>
-                        </div>
-                        <div class="footercard">
-                            <p class="tagcard">#
-                                <?= $exps->getexpname($job->req1) ?> #
-                                <?= $exps->getexpname($job->req2) ?>
-                            </p>
-                            <a href='jobdetails.php?id=<?= $job->id ?>'><button type="button" class="actioncard">Details
-                                </button></a>
-                        </div>
+            <li>
+                <div class="card">
+                    <div class="headercard <?= $job->state ?>card">
+                        <h1>
+                            <?= $job->state ?>
+                        </h1>
                     </div>
-                </li>
+                    <div class="infocard">
+                        <p class="titlecard">
+                            <?= $job->name ?>
+                        </p>
+                        <p>
+                        <h4>Price : </h4>
+                        <?= $job->price ?>
+                        <h4> $</h4>
+                        </p>
+                        <p>
+                            <?= $jobs->formatdesc($job->description) ?>
+                        </p>
+                    </div>
+                    <div class="footercard">
+                        <p class="tagcard">#
+                            <?= $exps->getexpname($job->req1) ?> #
+                            <?= $exps->getexpname($job->req2) ?>
+                        </p>
+                        <a href='jobdetails.php?id=<?= $job->id ?>'><button type="button" class="actioncard">Details
+                            </button></a>
+                    </div>
+                </div>
+            </li>
             <?php endforeach; ?>
         </ul>
     </div>

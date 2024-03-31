@@ -129,16 +129,12 @@ alert('you cant delete this job');
                 <img src="./assets/history.svg" alt="history">
                 <span class="hidden">History</span>
             </a>
-            <a class="link" title='Notifications' href='notification.php'>
-                <img src="./assets/notification.svg" alt="notifications">
-                <span class="hidden">Notifications</span>
-            </a>
+
             <a class="link" title='new post' href='new.php'>
                 <img src="./assets/new.svg" alt="new post">
                 <span class="hidden">New Post</span>
             </a>
-            </li>
-            <a class="link" title='Messages' href='message.php'>
+            <a class="link" title='Messages' href='messages.php'>
                 <img src="./assets/message.svg" alt="messages">
                 <span class="hidden">contact us</span>
             </a>

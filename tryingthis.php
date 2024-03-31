@@ -1,42 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-
-    <div class="contact-form-wrap">
-        <h2 class="contact__title">Get in touch</h2>
-        <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod
-            mazim placerat facer possim assum. </p>
-        <form id="contact-form" action="https://demo.hasthemes.com/boighor-preview/boighor/mail.php" method="post">
-            <div class="single-contact-form space-between">
-                <input type="text" name="firstname" placeholder="First Name*">
-                <input type="text" name="lastname" placeholder="Last Name*">
-            </div>
-            <div class="single-contact-form space-between">
-                <input type="email" name="email" placeholder="Email*">
-                <input type="text" name="website" placeholder="Website*">
-            </div>
-            <div class="single-contact-form">
-                <input type="text" name="subject" placeholder="Subject*">
-            </div>
-            <div class="single-contact-form message">
-                <textarea name="message" placeholder="Type your message here.."></textarea>
-            </div>
-            <div class="contact-btn">
-                <button type="submit">Send Email</button>
-            </div>
-        </form>
-    </div>
-    <div class="form-output">
-        <p class="form-messege">
-    </div>
-    </div>
-</body>
-
-</html>
+<?php
+$filters =
+    $query = "select * from jobs where 1 and ";
+$addid = false;
+$poss_exp = array();
+$filters = array_slice($_GET, 1, count($_GET));
+foreach ($filters as $filter) {
+    $temp = strtolower(trim(substr($filter, strpos($filter, ':') + 1, strlen($filter))));
+    $exp = strtolower(trim(substr($filter, 0, strpos($filter, ':'))));
+    if ($exp != 'description' && $exp != 'price') {
+        $addid = true;
+        $exps = new expRep();
+        $exp = " name = '" . $exp . "' and ";
+        if (strpos($temp, 'and')) {
+            $exp = $exp . "(years " . substr($temp, 0, strpos($temp, 'and') + 3) . " years " . substr($temp, strpos($temp, 'and') + 3, strlen($temp)) . ')';
+        } else if (strpos($temp, 'or')) {
+            $exp = $exp . '(years ' . substr($temp, 0, strpos($temp, 'or') + 2) . ' years ' . substr($temp, strpos($temp, 'or') + 3, strlen($temp)) . ')';
+        } else {
+            $exp = $exp . 'years ' . ' ' . $temp;
+        }
+        $getids = $exps->getids($exp);
+        foreach ($getids as $id) {
+            array_push($poss_exp, $id->id);
+        }
+    } else if ($exp == 'description') {
+        $query = $query . " description like '%{$temp}%' and ";
+    } else {
+        if (strpos($temp, 'and')) {
+            $exp = "(price " . substr($temp, 0, strpos($temp, 'and')) . ' and ' . " price " . substr($temp, strpos($temp, 'and') + 3, strlen($temp)) . ')';
+        } else if (strpos($temp, 'or')) {
+            $exp = '(price ' . substr($temp, 0, strpos($temp, 'or')) . ' and ' . ' price ' . substr($temp, strpos($temp, 'or') + 3, strlen($temp)) . ')';
+        } else {
+            $exp = 'price ' . ' ' . $temp;
+        }
+        $query = $query . $exp . " and ";
+    }
+}
+if ($addid) {
+    if (count($poss_exp) == 0) {
+        return null;
+    } else {
+        $temp2 = "(";
+        foreach ($poss_exp as $id) {
+            $temp2 = $temp2 . $id . ', ';
+        }
+        $temp2 = substr($temp2, 0, strlen($temp2) - 2) . ')';
+        $query = $query . "req1 in " . $temp2 . " and req2 in " . $temp2 . " and ";
+    }
+}
+$query = $query . ' 1 limit 15;';
+$query = strtolower($query);
+var_dump($query);
