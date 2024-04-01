@@ -37,4 +37,28 @@ class expRep
         $ids = $res->fetchAll(PDO::FETCH_OBJ);
         return $ids;
     }
+    public function new($name, $years)
+    {
+        $query = "select id from {$this->table} where name = '{$name}' and years = {$years};";
+        $res = $this->db->query($query);
+        $id = $res->fetch(PDO::FETCH_OBJ);
+        if ($id != null) {
+            return $id->id;
+        } else {
+            $query = "select id from {$this->table} order by id desc ;";
+            $res = $this->db->query($query);
+            $id = $res->fetch(PDO::FETCH_OBJ);
+            $id = $id->id + 1;
+            $query = "insert into {$this->table} values ({$id}, '{$name}', {$years});";
+            $res = $this->db->query($query);
+            return $id;
+        }
+    }
+    public function getnameyears($id)
+    {
+        $query = "select * from {$this->table} where id = {$id};";
+        $res = $this->db->query($query);
+        $name = $res->fetch(PDO::FETCH_OBJ);
+        return array($name->name, $name->years);
+    }
 }

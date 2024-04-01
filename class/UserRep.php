@@ -8,7 +8,7 @@ class UserRep
         $this->db = connexionBd::getInstance();
     }
     /**
-     * allows you to login and returns -1 if mail in use, -2 if pwd is wrong and id of user if successfully logged in
+     * allows you to login and returns -1 if mail isnt in use, -2 if pwd is wrong and id of user if successfully logged in
      * @param string $mail mail used
      * @param string $pwd password  
      */
@@ -62,5 +62,14 @@ class UserRep
         $query = "delete from {$this->table} where id=3";
         $result = $this->db->query($query);
     }
+    public function change(int $id, string $email, string $name, string $pwd, array $exps)
+    {
+        $query = "update {$this->table} set email = '{$email}', fullName = '{$name}' ";
+        for ($i = 1; $i < count($exps) + 1; $i++) {
+            $query = $query . ", exp{$i} = {$exps[$i - 1]} ";
+        }
+        $query = $query . ", pwd = '{$pwd}' where id = {$id}";
+        $result = $this->db->query($query);
+        return $result;
+    }
 }
-?>

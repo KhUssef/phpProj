@@ -16,7 +16,9 @@ if (!isset($_SESSION['id'])) {
     header('Location:login.php');
 }
 $users = new UserRep();
+$exps = new expRep();
 $user = $users->getuser($_SESSION['id']);
+$exps_list = $exps->getfields();
 ?>
 
 <head>
@@ -24,9 +26,18 @@ $user = $users->getuser($_SESSION['id']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='cssobjs/sidebar.css' />
     <link rel='stylesheet' href='cssobjs/new.css' />
-
     <script src="jsobjs/sidebar.js" type="module" defer></script>
+    <script src="jsobjs/new.js" type="module" defer></script>
     <title>Details</title>
+</head>
+
+<body>
+    <datalist id="options">
+        <?php
+        foreach ($exps_list as $exp): ?>
+        <option value=" <?= $exp->name ?>" />
+        <?php endforeach; ?>
+    </datalist>
     <nav class='sidebar'>
         <div class="sidebar-header">
             <a class="logo-wrapper">
@@ -48,7 +59,7 @@ $user = $users->getuser($_SESSION['id']);
                 <img src="./assets/history.svg" alt="history">
                 <span class="hidden">History</span>
             </a>
-            <a class="link" title='new post' href='new.php'>
+            <a class="link active" title='new post' href='new.php'>
                 <img src="./assets/new.svg" alt="new post">
                 <span class="hidden">New Post</span>
             </a>
@@ -82,16 +93,48 @@ $user = $users->getuser($_SESSION['id']);
         </div>
     </nav>
     <div class="main">
-        <form class='card' action="">
-            <p>
-                fndslnbkfd
-            </p>
+        <form class="form" action="create.php" method="post" enctype="multipart/form-data">
+            <p class="message">All fields are required. </p>
+            <label>
+                <input required placeholder="" type="text" class="input" name='name'>
+                <span>Name</span>
+            </label>
+            <label>
+                <input required placeholder="" type="number" class="input" name='price'>
+                <span>price</span>
+            </label>
+            <div class="flex">
+                <label>
+                    <input required placeholder="" autocomplete='on' type="text" class="input" list='options'
+                        name='req1'>
+                    <span>requirement 1</span>
+                </label>
+
+                <label>
+                    <input required placeholder="" type="number" min='0' class="input" name='req1y'>
+                    <span>years</span>
+                </label>
+            </div>
+            <div class="flex">
+                <label>
+                    <input required="" placeholder="" autocomplete='on' type="text" class="input" list='options'
+                        name='req2'>
+                    <span>requirement 2</span>
+                </label>
+
+                <label>
+                    <input required placeholder="" type="number" min='0' class="input" name='req2y'>
+                    <span>years</span>
+                </label>
+            </div>
+            <textarea id='description' placeholder="Description" class="input" name='desc'></textarea>
+            <input type="file" name='file' id="real-file" hidden="hidden" accept='.txt' />
+            <button type="button" id="custom-button">CHOOSE A FILE</button>
+            <span id="custom-text">No file chosen, yet.</span>
+            <button class="submit">Submit</button>
         </form>
     </div>
     </div>
-</head>
-
-<body>
 
 </body>
 

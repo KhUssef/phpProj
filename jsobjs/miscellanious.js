@@ -19,3 +19,8 @@ export function isvalidsql(text) {
     const pattern = /^[\s\S]*:\s*(=|!=|>|<|>=|<=)\s*\d+\s*(and|or)?\s*(=|!=|>|<|>=|<=)?\s*\d+$/i;
     return pattern.test(text);
 }
+
+export function validmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}

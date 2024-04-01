@@ -97,4 +97,14 @@ class jobRep
         $query = "update {$this->table} set state='inactive', employee = {$uid} where id = {$jid} ";
         $res = $this->db->query($query);
     }
+    public function new($name, $price, $desc, $req1, $req2, $master)
+    {
+        $query = "select id from {$this->table} order by id desc ;";
+        $res = $this->db->query($query);
+        $job = $res->fetch(PDO::FETCH_OBJ);
+        $id = $job->id + 1;
+        $query = "insert into {$this->table} values ({$id}, '{$name}', '{$desc}', {$price}, {$req1}, {$req2}, 'active', {$master}, 0)";
+        //return $query;
+        $res = $this->db->query($query);
+    }
 }

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='cssobjs/signup.css' />
+    <script src='./jsobjs/signup.js' type="module" defer></script>
     <title>Document</title>
 </head>
 
@@ -41,12 +42,13 @@
         <p class="signin">Already have an acount ? <a href="login.php">Signin</a> </p>
     </form>
 </body>
-<?php 
-        if(isset($_COOKIE["error_sign"])){?>
+<?php
+if (isset($_COOKIE["error_sign"])) { ?>
 <script>
 alert('email already in use');
 </script>
-<?php setcookie("error_sign", '');}
-    ?>
+<?php setcookie("error_sign", '');
+}
+?>
 
 </html>
