@@ -64,7 +64,7 @@ class jobRep
                     $temp2 = $temp2 . $id . ', ';
                 }
                 $temp2 = substr($temp2, 0, strlen($temp2) - 2) . ')';
-                $query = $query . "req1 in " . $temp2 . " and req2 in " . $temp2 . " and ";
+                $query = $query . "req1 in " . $temp2 . " or req2 in " . $temp2 . " and ";
             }
         }
         $query = $query . ' 1 limit 15;';

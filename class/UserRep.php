@@ -64,12 +64,19 @@ class UserRep
     }
     public function change(int $id, string $email, string $name, string $pwd, array $exps)
     {
+        $query = "select * from {$this->table} where email = '{$email}'";
+        $result = $this->db->query($query);
+        $user = $result->fetchAll(PDO::FETCH_OBJ);
+        if (!(count($user) == 0 or (count($user) == 1 and $user[0]->id = $id))) {
+            return -1;
+        }
         $query = "update {$this->table} set email = '{$email}', fullName = '{$name}' ";
         for ($i = 1; $i < count($exps) + 1; $i++) {
             $query = $query . ", exp{$i} = {$exps[$i - 1]} ";
         }
         $query = $query . ", pwd = '{$pwd}' where id = {$id}";
         $result = $this->db->query($query);
-        return $result;
+        return 1;
+
     }
 }

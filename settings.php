@@ -15,6 +15,19 @@ if (isset($_COOKIE["id"])) {
 if (!isset($_SESSION['id'])) {
     header('Location:login.php');
 }
+if (isset($_COOKIE['error'])) {
+    if ($_COOKIE['error'] == 'pwd') {
+        ?>
+<script>
+alert("password is incorrect");
+</script>
+<?php } else { ?>
+<script>
+alert("mail is already in use");
+</script>
+<?php }
+    setcookie("error");
+}
 $users = new UserRep();
 $exps = new expRep();
 $user = $users->getuser($_SESSION['id']);

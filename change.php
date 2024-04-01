@@ -5,7 +5,6 @@ session_start();
 if (!isset($_SESSION['id'])) {
     header('Location:login.php');
 }
-var_dump($_POST);
 $users = new UserRep();
 $user = $users->getuser($_SESSION['id']);
 $temp = $users->login($user[1], trim($_POST['pwd']));
@@ -20,6 +19,10 @@ if ($temp == -2) {
             array_push($reqs, $exps->new(trim($_POST["req{$i}"]), trim($_POST["req{$i}y"])));
         }
     }
-    var_dump($users->change($temp, trim($_POST['mail']), $_POST['name'], $_POST['npwd'], $reqs));
+    $temp = ($users->change($temp, trim($_POST['mail']), $_POST['name'], $_POST['npwd'], $reqs));
+    if ($temp == -1) {
+        setcookie('error', 'mail', time() + 100);
+        header('Location:settings.php');
+    }
 
 }
