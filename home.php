@@ -8,11 +8,14 @@ $users = new UserRep();
 $user = $users->getuser($_SESSION['id']);
 $jobs = new jobRep();
 $exps = new expRep();
+$filters = array();
 if (count($_GET) == 0) {
     $joblist = $jobs->getjobs();
-    $filters = array_slice($user, 2, 4);
-    for ($i = 0; $i < count($filters); $i++) {
-        $filters[$i] = $exps->getexp($filters[$i]);
+    $temp = array_slice($user, 2, 4);
+    for ($i = 0; $i < count($temp); $i++) {
+        if ($temp[$i] != 0) {
+            array_push($filters, $exps->getexp($temp[$i]));
+        }
     }
 } else {
     $filters = array_slice($_GET, 1, count($_GET));
@@ -53,7 +56,6 @@ alert('you cant delete this job');
     setcookie('remove');
 }
 ?>
-
 
 
 
@@ -138,6 +140,12 @@ alert('you cant delete this job');
                 <img src="./assets/message.svg" alt="messages">
                 <span class="hidden">contact us</span>
             </a>
+            <?php if ($user[6] == 'admin') { ?>
+            <a class="link" title='Admin Dashboard' href='admin.php'>
+                <img src="./assets/admin.svg" alt="messages">
+                <span class="hidden">admin dash</span>
+            </a>
+            <?php } ?>
             </li>
         </div>
         <div class="sidebar-bottom">
@@ -153,10 +161,10 @@ alert('you cant delete this job');
                     <img src="./assets/default.jpg" alt="">
                 </div>
                 <div class="user-details hidden">
-                    <p class="username">
+                    <p title='<?= $user[0] ?>' class="username">
                         <?= $user[0] ?>
                     </p>
-                    <p class="user-email">
+                    <p title='<?= $user[1] ?>' class="user-email">
                         <?= $user[1] ?>
                     </p>
                 </div>

@@ -87,7 +87,7 @@ for ($i = 0; $i < 4; $i++) {
                 <img src="./assets/history.svg" alt="history">
                 <span class="hidden">History</span>
             </a>
-            <a class="link active" title='new post' href='new.php'>
+            <a class="link" title='new post' href='new.php'>
                 <img src="./assets/new.svg" alt="new post">
                 <span class="hidden">New Post</span>
             </a>
@@ -95,11 +95,17 @@ for ($i = 0; $i < 4; $i++) {
                 <img src="./assets/message.svg" alt="messages">
                 <span class="hidden">contact us</span>
             </a>
+            <?php if ($user[6] == 'admin') { ?>
+            <a class="link" title='Admin Dashboard' href='amdin.php'>
+                <img src="./assets/admin.svg" alt="messages">
+                <span class="hidden">admin dash</span>
+            </a>
+            <?php } ?>
             </li>
         </div>
         <div class="sidebar-bottom">
             <div class="sidebar-links">
-                <a class="link" title='Settings' href='settings.php'>
+                <a class="link active" title='Settings' href='settings.php'>
                     <img src="./assets/settings.svg" alt="">
                     <span class="hidden">Settings</span>
                 </a>

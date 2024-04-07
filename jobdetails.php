@@ -59,6 +59,12 @@ $exps = new expRep();
                 <img src="./assets/message.svg" alt="messages">
                 <span class="hidden">contact us</span>
             </a>
+            <?php if ($user[6] == 'admin') { ?>
+            <a class="link" title='Admin Dashboard' href='admin.php'>
+                <img src="./assets/admin.svg" alt="messages">
+                <span class="hidden">admin dash</span>
+            </a>
+            <?php } ?>
             </li>
         </div>
         <div class="sidebar-bottom">
@@ -114,9 +120,11 @@ $exps = new expRep();
                 <?php } else { ?>
                 <a href='applicants.php?id=<?= $job->id ?>'><button type="button" class="actioncard">check applicants
                     </button></a>
-                <?php } ?>
-                <a href='remove.php?id=<?= $job->id ?>'> <button type="button" class="actioncard delete">accept
+                <?php }
+                if (($_SESSION['id'] == $job->master) or ($user[6] == 'admin')) { ?>
+                <a href='remove.php?id=<?= $job->id ?>'> <button type="button" class="actioncard delete">delete
                     </button></a>
+                <?php } ?>
             </div>
         </div>
     </div>

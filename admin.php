@@ -1,33 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
 <?php
 require_once ('class/autoload.php');
 session_start();
-if (!isset($_SESSION['id'])) {
-    header('Location:login.php');
+if (isset($_COOKIE["id"])) {
+    if ($_COOKIE["id"] == -1) {
+        unset($_SESSION['id']);
+        setcookie("id");
+    } else {
+        $_SESSION['id'] = $_COOKIE["id"];
+    }
+
 }
 $users = new UserRep();
 $user = $users->getuser($_SESSION['id']);
 $jobs = new jobRep();
 $exps = new expRep();
-$joblist = $jobs->getjobbymaster($_SESSION['id']);
+if ($user[6] != 'admin') {
+    header('Location:home.php');
+}
+$userlist = $users->getusers();
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link rel="stylesheet" href="cssobjs/history.css" />
-    <link rel='stylesheet' href='cssobjs/sidebar.css' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/assets/logo.svg">
+    <link rel='stylesheet' href='cssobjs/sidebar.css' />
+    <link rel='stylesheet' href='cssobjs/applicants.css' />
+    <style>
+    .actioncard {
+        background-color: red;
+    }
     </style>
-    <title>tanit</title>
-    <script src='jsobjs/sidebar.js' type="module" defer></script>
-</head>
-
-<body>
+    <script src="jsobjs/sidebar.js" type="module" defer></script>
+    <title>Details</title>
     <nav class='sidebar'>
         <div class="sidebar-header">
             <a class="logo-wrapper">
@@ -39,12 +45,13 @@ $joblist = $jobs->getjobbymaster($_SESSION['id']);
             </button>
         </div>
 
+
         <div class="sidebar-links">
-            <a class="link " href='home.php'>
+            <a class="link" href='home.php'>
                 <img src="./assets/home.svg" alt="">
                 <span class="hidden">Home</span>
             </a>
-            <a class="link active " title='History' href='history.php'>
+            <a class="link" title='History' href='history.php'>
                 <img src="./assets/history.svg" alt="history">
                 <span class="hidden">History</span>
             </a>
@@ -57,7 +64,7 @@ $joblist = $jobs->getjobbymaster($_SESSION['id']);
                 <span class="hidden">contact us</span>
             </a>
             <?php if ($user[6] == 'admin') { ?>
-            <a class="link" title='Admin Dashboard' href='admin.php'>
+            <a class="link active" title='Admin Dashboard' href='messages.php'>
                 <img src="./assets/admin.svg" alt="messages">
                 <span class="hidden">admin dash</span>
             </a>
@@ -87,44 +94,44 @@ $joblist = $jobs->getjobbymaster($_SESSION['id']);
             </div>
         </div>
     </nav>
-    <div class='main'>
-        <ul>
-            <?php
-            foreach ($joblist as $job):
-                ?>
-            <li>
-                <div class="card">
-                    <div class="headercard <?= $job->state ?>card">
-                        <h1>
-                            <?= $job->state ?>
-                        </h1>
-                    </div>
-                    <div class="infocard">
-                        <p class="titlecard">
-                            <?= $job->name ?>
-                        </p>
-                        <p>
-                        <h4>Price : </h4>
-                        <?= $job->price ?>
-                        <h4> $</h4>
-                        </p>
-                        <p>
-                            <?= $jobs->formatdesc($job->description) ?>
-                        </p>
-                    </div>
-                    <div class="footercard">
-                        <p class="tagcard">#
-                            <?= $exps->getexpname($job->req1) ?> #
-                            <?= $exps->getexpname($job->req2) ?>
-                        </p>
-                        <a href='jobdetails.php?id=<?= $job->id ?>'><button type="button" class="actioncard">Details
-                            </button></a>
-                    </div>
-                </div>
-            </li>
-            <?php endforeach; ?>
-        </ul>
+    <div class="main">
+        <?php foreach ($userlist as $app): ?>
+        <div class="card">
+            <div class="infocard">
+                <h1 class="titlecard">
+                    <?= $app->fullName ?>
+                </h1>
+                <p>
+                </p>
+                <p class='description'>
+                    <?= $app->email ?><br>Password:
+                    <?= $app->pwd ?><br>Type:
+                    <?= $app->type ?>
+                </p>
+                <p class="tagcard">experience : #
+                    <?php if ($app->exp1 != 0) {
+                            echo ($exps->getexp($app->exp1) . " years #");
+                        } ?>
+                    <?php if ($app->exp2 != 0) {
+                            echo ($exps->getexp($app->exp2) . " years #");
+                        } ?>
+                    <?php if ($app->exp3 != 0) {
+                            echo ($exps->getexp($app->exp3) . " years #");
+                        } ?>
+                    <?php if ($app->exp4 != 0) {
+                            echo ($exps->getexp($app->exp4) . " years");
+                        } ?>
+                </p>
+                <a href='delete.php?id=<?= $app->id ?>'> <button type="button" class="actioncard ">delete
+                    </button></a>
+            </div>
+        </div>
+        <?php endforeach; ?>
     </div>
+</head>
+
+<body>
+
 </body>
 
 </html>

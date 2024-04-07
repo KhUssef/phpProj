@@ -6,9 +6,9 @@ form.addEventListener('submit', e => {
     const _pwdc = document.querySelector('#pwdc');
     const _fname = document.querySelector("#fullname");
     const mail = (_mail.value).trim();
-    const pwd = (_pwd.value).trim;
-    const pwdc = (_pwdc.value).trim;
-    const fname = (_fname.value).trim;
+    const pwd = (_pwd.value).trim();
+    const pwdc = (_pwdc.value).trim();
+    const fname = (_fname.value).trim();
     if (mail == '' || pwd == '' || pwdc == '' || fname == '') {
         e.preventDefault();
         alert("all fields must be filled");

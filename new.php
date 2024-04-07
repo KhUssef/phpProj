@@ -67,6 +67,12 @@ $exps_list = $exps->getfields();
                 <img src="./assets/message.svg" alt="messages">
                 <span class="hidden">contact us</span>
             </a>
+            <?php if ($user[6] == 'admin') { ?>
+            <a class="link" title='Admin Dashboard' href='admin.php'>
+                <img src="./assets/admin.svg" alt="messages">
+                <span class="hidden">admin dash</span>
+            </a>
+            <?php } ?>
             </li>
         </div>
         <div class="sidebar-bottom">

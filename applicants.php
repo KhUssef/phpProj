@@ -49,7 +49,7 @@ $applist = $apps->getappsbyid($_GET['id']);
                 <img src="./assets/home.svg" alt="">
                 <span class="hidden">Home</span>
             </a>
-            <a class="link" title='History' href='history.php'>
+            <a class="link active" title='History' href='history.php'>
                 <img src="./assets/history.svg" alt="history">
                 <span class="hidden">History</span>
             </a>
@@ -61,6 +61,12 @@ $applist = $apps->getappsbyid($_GET['id']);
                 <img src="./assets/message.svg" alt="messages">
                 <span class="hidden">contact us</span>
             </a>
+            <?php if ($user[6] == 'admin') { ?>
+            <a class="link" title='Admin Dashboard' href='admin.php'>
+                <img src="./assets/admin.svg" alt="messages">
+                <span class="hidden">admin dash</span>
+            </a>
+            <?php } ?>
             </li>
         </div>
         <div class="sidebar-bottom">

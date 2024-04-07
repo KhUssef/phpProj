@@ -4,7 +4,7 @@ form.addEventListener('submit', e => {
     const _mail = document.querySelector('#mail');
     const _pwd = document.querySelector('#pwd');
     const mail = (_mail.value).trim();
-    const pwd = (_pwd.value).trim;
+    const pwd = (_pwd.value).trim();
     if (pwd == '' || mail == '') {
         e.preventDefault();
         alert("pwd and mail cant be empty");

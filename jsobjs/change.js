@@ -21,7 +21,7 @@ form.addEventListener('submit', e => {
             j++;
         }
     };
-    if (form['mail'].value.trim != '') {
+    if (form['mail'].value.trim() != '') {
         if (!validmail(form['mail'].value.trim())) {
             alert('mail not formatted correctly');
             e.preventDefault();

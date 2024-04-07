@@ -44,7 +44,7 @@ class UserRep
             $result = $this->db->query($query);
             $user = $result->fetch(PDO::FETCH_OBJ);
             $id = ((int) $user->id) + 1;
-            $query = "insert into {$this->table} values({$id}, {$mail}, {$pwd}, {$fname}, {$seeking})";
+            $query = "insert into {$this->table}(id, email, pwd, fullName, type) values({$id}, '{$mail}', '{$pwd}', '{$fname}', '{$seeking}')";
             $this->db->query($query);
             return $id;
         }
@@ -77,6 +77,17 @@ class UserRep
         $query = $query . ", pwd = '{$pwd}' where id = {$id}";
         $result = $this->db->query($query);
         return 1;
-
+    }
+    public function getusers()
+    {
+        $query = "select * from {$this->table} ";
+        $result = $this->db->query($query);
+        $users = $result->fetchAll(PDO::FETCH_OBJ);
+        return $users;
+    }
+    public function delete(int $id)
+    {
+        $query = "delete from {$this->table} where id = {$id}";
+        $result = $this->db->query($query);
     }
 }

@@ -23,6 +23,7 @@ if ($temp == -2) {
     if ($temp == -1) {
         setcookie('error', 'mail', time() + 100);
         header('Location:settings.php');
+    } else {
+        header("Location:settings.php");
     }
-
 }
