@@ -3,33 +3,46 @@ class appRep
 {
     private $db = null;
     private $table = 'applicants';
+
     public function __construct()
     {
         $this->db = connexionBd::getInstance();
     }
+
     public function apply($uid, $jid)
     {
-        $query = "select * from {$this->table} where jobid={$jid} and userid={$uid}";
-        $result = $this->db->query($query);
-        $apps = $result->fetch(PDO::FETCH_OBJ);
-        if ($apps == null) {
-            $query = "insert into {$this->table} values({$jid}, {$uid})";
-            $result = $this->db->query($query);
-            $apps = $result->fetch(PDO::FETCH_OBJ);
+        $query = "SELECT * FROM {$this->table} WHERE jobid = :jid AND userid = :uid";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':jid', $jid);
+        $stmt->bindParam(':uid', $uid);
+        $stmt->execute();
+        $apps = $stmt->fetch(PDO::FETCH_OBJ);
+        if ($apps === false) {
+            $query = "INSERT INTO {$this->table} (jobid, userid) VALUES (:jid, :uid)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':jid', $jid);
+            $stmt->bindParam(':uid', $uid);
+            $stmt->execute();
             return 'true';
         }
         return 'false';
     }
+
     public function remove($id)
     {
-        $query = "delete from {$this->table} where jobid={$id}";
-        $res = $this->db->query($query);
+        $query = "DELETE FROM {$this->table} WHERE jobid = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
     }
+
     public function getappsbyid($id)
     {
-        $query = "select userid from {$this->table} where jobid={$id}";
-        $result = $this->db->query($query);
-        $apps = $result->fetchAll(PDO::FETCH_OBJ);
+        $query = "SELECT userid FROM {$this->table} WHERE jobid = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $apps = $stmt->fetchAll(PDO::FETCH_OBJ);
         $arr = array();
         foreach ($apps as $app) {
             array_push($arr, $app->userid);

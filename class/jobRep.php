@@ -9,7 +9,7 @@ class jobRep
     }
     public function getjobs()
     {
-        $query = "select * from {$this->table} limit 15;";
+        $query = "select * from {$this->table} limit 30;";
         $res = $this->db->query($query);
         $jobs = $res->fetchAll(PDO::FETCH_OBJ);
         return $jobs;
@@ -43,7 +43,7 @@ class jobRep
                     array_push($poss_exp, $id->id);
                 }
             } else if ($exp == 'description') {
-                $query = $query . " description like '%{$temp}%' and ";
+                $query = $query . " description like :desc and ";
             } else {
                 if (strpos($temp, 'and')) {
                     $exp = "(price " . substr($temp, 0, strpos($temp, 'and')) . ' and ' . " price " . substr($temp, strpos($temp, 'and') + 3, strlen($temp)) . ')';
@@ -64,47 +64,69 @@ class jobRep
                     $temp2 = $temp2 . $id . ', ';
                 }
                 $temp2 = substr($temp2, 0, strlen($temp2) - 2) . ')';
-                $query = $query . "req1 in " . $temp2 . " or req2 in " . $temp2 . " and ";
+                $query = $query . "(req1 in " . $temp2 . " or req2 in " . $temp2 . ") and ";
             }
         }
-        $query = $query . ' 1 limit 15;';
+        $query = $query . ' 1 limit 30;';
         $query = strtolower($query);
-        $res = $this->db->query($query);
-        $jobs = $res->fetchAll(PDO::FETCH_OBJ);
+        $stmt = $this->db->prepare($query);
+        if (strpos($query, ":desc")) {
+            $stmt->bindValue(':desc', '%' . $temp . '%');
+        }
+        $stmt->execute();
+        $jobs = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $jobs;
     }
     public function getjobbyid($id)
     {
-        $query = "select * from {$this->table} where id = {$id};";
-        $res = $this->db->query($query);
-        $job = $res->fetch(PDO::FETCH_OBJ);
+        $query = "SELECT * FROM {$this->table} WHERE id = :id;";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $job = $stmt->fetch(PDO::FETCH_OBJ);
         return $job;
     }
     public function remove($id)
     {
-        $query = "delete from {$this->table} where id = {$id}";
-        $res = $this->db->query($query);
+        $query = "DELETE FROM {$this->table} WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
     }
     public function getjobbymaster($id)
     {
-        $query = "select * from {$this->table} where master = {$id};";
-        $res = $this->db->query($query);
-        $job = $res->fetchAll(PDO::FETCH_OBJ);
+        $query = "SELECT * FROM {$this->table} WHERE master = :id;";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $job = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $job;
     }
     public function done($jid, $uid)
     {
-        $query = "update {$this->table} set state='inactive', employee = {$uid} where id = {$jid} ";
-        $res = $this->db->query($query);
+        $query = "UPDATE {$this->table} SET state='inactive', employee = :uid WHERE id = :jid ";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':uid', $uid);
+        $stmt->bindParam(':jid', $jid);
+        $stmt->execute();
     }
+
     public function new($name, $price, $desc, $req1, $req2, $master)
     {
         $query = "select id from {$this->table} order by id desc ;";
         $res = $this->db->query($query);
         $job = $res->fetch(PDO::FETCH_OBJ);
         $id = $job->id + 1;
-        $query = "insert into {$this->table} values ({$id}, '{$name}', '{$desc}', {$price}, {$req1}, {$req2}, 'active', {$master}, 0)";
-        //return $query;
-        $res = $this->db->query($query);
+        $query = "INSERT INTO {$this->table} (id, name, description, price, req1, req2, state, master, employee) 
+                  VALUES (:id, :name, :desc, :price, :req1, :req2, 'active', :master, 0)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':desc', $desc);
+        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':req1', $req1);
+        $stmt->bindParam(':req2', $req2);
+        $stmt->bindParam(':master', $master);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
     }
 }

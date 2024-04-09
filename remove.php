@@ -1,8 +1,8 @@
 <?php
 require_once ('class/autoload.php');
 session_start();
-if (!isset($_SESSION['id'])) {
-    header('Location:login.php');
+if (isset($_COOKIE['id']) || !isset($_SESSION['id'])) {
+    header("Location:login.php");
 }
 $jobs = new jobRep();
 $job = $jobs->getjobbyid($_GET['id']);

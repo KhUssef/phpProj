@@ -3,17 +3,8 @@
 <?php
 require_once ('class/autoload.php');
 session_start();
-if (isset($_COOKIE["id"])) {
-    if ($_COOKIE["id"] == -1) {
-        unset($_SESSION['id']);
-        setcookie("id");
-    } else {
-        $_SESSION['id'] = $_COOKIE["id"];
-    }
-
-}
-if (!isset($_SESSION['id'])) {
-    header('Location:login.php');
+if (isset($_COOKIE['id']) || !isset($_SESSION['id'])) {
+    header("Location:login.php");
 }
 $users = new UserRep();
 $exps = new expRep();

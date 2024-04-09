@@ -1,8 +1,8 @@
 <?php
 require_once ('class/autoload.php');
 session_start();
-if (!isset($_SESSION['id'])) {
-    header('Location:login.php');
+if (isset($_COOKIE['id']) || !isset($_SESSION['id'])) {
+    header("Location:login.php");
 }
 $users = new UserRep();
 $user = $users->getuser($_SESSION['id']);
@@ -22,6 +22,10 @@ $joblist = $jobs->getjobbymaster($_SESSION['id']);
     <link rel='stylesheet' href='cssobjs/sidebar.css' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/assets/logo.svg">
+    <style>
+    .sidebar {
+        height: 100vh;
+    }
     </style>
     <title>tanit</title>
     <script src='jsobjs/sidebar.js' type="module" defer></script>
@@ -39,15 +43,17 @@ $joblist = $jobs->getjobbymaster($_SESSION['id']);
             </button>
         </div>
 
+
         <div class="sidebar-links">
-            <a class="link " href='home.php'>
+            <a class="link" href='home.php'>
                 <img src="./assets/home.svg" alt="">
                 <span class="hidden">Home</span>
             </a>
-            <a class="link active " title='History' href='history.php'>
+            <a class="link active" title='History' href='history.php'>
                 <img src="./assets/history.svg" alt="history">
                 <span class="hidden">History</span>
             </a>
+
             <a class="link" title='new post' href='new.php'>
                 <img src="./assets/new.svg" alt="new post">
                 <span class="hidden">New Post</span>
@@ -77,10 +83,10 @@ $joblist = $jobs->getjobbymaster($_SESSION['id']);
                     <img src="./assets/default.jpg" alt="">
                 </div>
                 <div class="user-details hidden">
-                    <p class="username">
+                    <p title='<?= $user[0] ?>' class="username">
                         <?= $user[0] ?>
                     </p>
-                    <p class="user-email">
+                    <p title='<?= $user[1] ?>' class="user-email">
                         <?= $user[1] ?>
                     </p>
                 </div>
