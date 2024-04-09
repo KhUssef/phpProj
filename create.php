@@ -18,18 +18,4 @@ $id1 = $exps->new($_POST["req1"], $_POST["req1y"]);
 $id2 = $exps->new($_POST["req2"], $_POST["req2y"]);
 $jobs = new JobRep();
 $jobs->new($_POST["name"], $_POST["price"], $_POST['desc'], $id1, $id2, $_SESSION['id']);
-header('Location:home.php'); ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-
-</body>
-
-</html>
+header('Location:home.php');

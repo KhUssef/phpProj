@@ -27,7 +27,7 @@ $joblist = $jobs->getjobbymaster($_SESSION['id']);
         height: 100vh;
     }
     </style>
-    <title>tanit</title>
+    <title>History</title>
     <script src='jsobjs/sidebar.js' type="module" defer></script>
 </head>
 

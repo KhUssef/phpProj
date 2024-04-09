@@ -27,7 +27,12 @@ $userlist = $users->getusers();
     }
     </style>
     <script src="jsobjs/sidebar.js" type="module" defer></script>
-    <title>Details</title>
+    <title>admin Dashboard</title>
+    <link rel="icon" href="/assets/logo.svg">
+
+</head>
+
+<body>
     <nav class='sidebar'>
         <div class="sidebar-header">
             <a class="logo-wrapper">
@@ -122,10 +127,6 @@ $userlist = $users->getusers();
         </div>
         <?php endforeach; ?>
     </div>
-</head>
-
-<body>
-
 </body>
 
 </html>

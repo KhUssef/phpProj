@@ -20,9 +20,12 @@ $applist = $apps->getappsbyid($_GET['id']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='cssobjs/sidebar.css' />
     <link rel='stylesheet' href='cssobjs/applicants.css' />
-
     <script src="jsobjs/sidebar.js" type="module" defer></script>
+    <link rel="icon" href="/assets/logo.svg">
     <title>Details</title>
+</head>
+
+<body>
     <nav class='sidebar'>
         <div class="sidebar-header">
             <a class="logo-wrapper">
@@ -110,9 +113,6 @@ $applist = $apps->getappsbyid($_GET['id']);
         <?php } ?>
     </div>
     </div>
-</head>
-
-<body>
 
 </body>
 

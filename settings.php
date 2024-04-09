@@ -47,7 +47,7 @@ for ($i = 0; $i < 4; $i++) {
         color: gray;
     }
     </style>
-    <title>Details</title>
+    <title>settings</title>
 </head>
 
 <body>

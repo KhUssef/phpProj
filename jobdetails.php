@@ -17,10 +17,13 @@ $exps = new expRep();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='cssobjs/sidebar.css' />
+    <link rel="icon" href="/assets/logo.svg">
     <link rel='stylesheet' href='cssobjs/jobdetails.css' />
-
     <script src="jsobjs/sidebar.js" type="module" defer></script>
     <title>Details</title>
+</head>
+
+<body>
     <nav class='sidebar'>
         <div class="sidebar-header">
             <a class="logo-wrapper">
@@ -31,8 +34,6 @@ $exps = new expRep();
                 <img src="./assets/expand.svg" alt="expand button">
             </button>
         </div>
-
-
         <div class="sidebar-links">
             <a class="link" href='home.php'>
                 <img src="./assets/home.svg" alt="">
@@ -120,9 +121,6 @@ $exps = new expRep();
         </div>
     </div>
     </div>
-</head>
-
-<body>
 
 </body>
 

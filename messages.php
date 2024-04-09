@@ -19,7 +19,7 @@ $user = $users->getuser($_SESSION['id']);
     <link rel='stylesheet' href='cssobjs/sidebar.css' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/assets/logo.svg">
-    <title>tanit</title>
+    <title>feedback</title>
     <script src='jsobjs/sidebar.js' type="module" defer></script>
 </head>
 

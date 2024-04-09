@@ -19,7 +19,8 @@ $exps_list = $exps->getfields();
     <link rel='stylesheet' href='cssobjs/new.css' />
     <script src="jsobjs/sidebar.js" type="module" defer></script>
     <script src="jsobjs/new.js" type="module" defer></script>
-    <title>Details</title>
+    <link rel="icon" href="/assets/logo.svg">
+    <title>create</title>
 </head>
 
 <body>
