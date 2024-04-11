@@ -7,6 +7,15 @@ class jobRep
     {
         $this->db = connexionBd::getInstance();
     }
+
+    /**
+     * Fetches a limited set of jobs from the database.
+     *
+     * This function retrieves the first 30 jobs from the table specified by $this->table.
+     * The jobs are returned as an array of objects, where each object represents a job.
+     *
+     * @return array An array of objects, where each object represents a job.
+     */
     public function getjobs()
     {
         $query = "select * from {$this->table} limit 30;";
@@ -14,11 +23,28 @@ class jobRep
         $jobs = $res->fetchAll(PDO::FETCH_OBJ);
         return $jobs;
     }
+    /**
+     * Formats the description of a job.
+     *
+     * This method takes a job description as input and formats it to a specific length.
+     * If the description is longer than 100 characters, it truncates it and adds ellipsis at the end.
+     * If the description is shorter than 100 characters, it finds the first space after the 90th character
+     * and truncates the description at that point, then adds ellipsis at the end.
+     *
+     * @param string $desc The job description to be formatted.
+     * @return string The formatted job description.
+     */
     public function formatdesc($desc)
     {
         $a = strpos(substr($desc, 90, max(0, strlen($desc) - 90)), ' ');
         return ($a < 20 ? substr($desc, 0, 90 + $a) : substr($desc, 0, 100)) . '...';
     }
+    /**
+     * Retrieves jobs from the database based on the provided filters.
+     *
+     * @param array $filters An array of filters to apply to the query.
+     * @return array|null An array of job objects that match the filters, or null if no jobs are found.
+     */
     public function getjobswfilter($filters)
     {
         $query = "select * from {$this->table} where 1 and ";
@@ -77,6 +103,12 @@ class jobRep
         $jobs = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $jobs;
     }
+    /**
+     * Retrieves a job by its ID from the database.
+     *
+     * @param int $id The ID of the job to retrieve.
+     * @return object|null The job object if found, or null if not found.
+     */
     public function getjobbyid($id)
     {
         $query = "SELECT * FROM {$this->table} WHERE id = :id;";
@@ -86,6 +118,12 @@ class jobRep
         $job = $stmt->fetch(PDO::FETCH_OBJ);
         return $job;
     }
+    /**
+     * Removes a job record from the database.
+     *
+     * @param int $id The ID of the job record to be removed.
+     * @return void
+     */
     public function remove($id)
     {
         $query = "DELETE FROM {$this->table} WHERE id = :id";
@@ -93,6 +131,12 @@ class jobRep
         $stmt->bindParam(':id', $id);
         $stmt->execute();
     }
+    /**
+     * Retrieves all jobs associated with a specific master.
+     *
+     * @param int $id The ID of the master.
+     * @return array An array of job objects.
+     */
     public function getjobbymaster($id)
     {
         $query = "SELECT * FROM {$this->table} WHERE master = :id;";
@@ -102,6 +146,13 @@ class jobRep
         $job = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $job;
     }
+    /**
+     * Marks a job as done and updates the state and employee in the database.
+     *
+     * @param int $jid The ID of the job to mark as done.
+     * @param int $uid The ID of the employee who completed the job.
+     * @return void
+     */
     public function done($jid, $uid)
     {
         $query = "UPDATE {$this->table} SET state='inactive', employee = :uid WHERE id = :jid ";
@@ -111,6 +162,17 @@ class jobRep
         $stmt->execute();
     }
 
+    /**
+     * Creates a new job entry in the database.
+     *
+     * @param string $name The name of the job.
+     * @param float $price The price of the job.
+     * @param string $desc The description of the job.
+     * @param string $req1 The first requirement of the job.
+     * @param string $req2 The second requirement of the job.
+     * @param string $master The master of the job.
+     * @return void
+     */
     public function new($name, $price, $desc, $req1, $req2, $master)
     {
         $query = "select id from {$this->table} order by id desc ;";

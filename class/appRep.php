@@ -9,6 +9,14 @@ class appRep
         $this->db = connexionBd::getInstance();
     }
 
+    /**
+     * Applies for a job by a user.
+     *
+     * @param int $uid The user ID.
+     * @param int $jid The job ID.
+     *
+     * @return string Returns 'true' if the application is successful, 'false' otherwise.
+     */
     public function apply($uid, $jid)
     {
         $query = "SELECT * FROM {$this->table} WHERE jobid = :jid AND userid = :uid";
@@ -27,6 +35,11 @@ class appRep
         }
         return 'false';
     }
+    /**
+     * Removes all applications associated with a job.
+     *
+     * @param int $id The job ID.
+     */
 
     public function remove($id)
     {
@@ -35,6 +48,13 @@ class appRep
         $stmt->bindParam(':id', $id);
         $stmt->execute();
     }
+    /**
+     * Retrieves user IDs of all applicants for a specific job.
+     *
+     * @param int $id The job ID.
+     *
+     * @return array An array containing user IDs of applicants for the job.
+     */
 
     public function getappsbyid($id)
     {

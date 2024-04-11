@@ -8,7 +8,11 @@ class expRep
     {
         $this->db = connexionBd::getInstance();
     }
-
+    /**
+     * Retrieves distinct experience names from the database.
+     *
+     * @return array An array containing distinct experience names.
+     */
     public function getfields()
     {
         $query = "SELECT DISTINCT(name) FROM {$this->table} LIMIT 50;";
@@ -17,6 +21,13 @@ class expRep
         $fields = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $fields;
     }
+    /**
+     * Retrieves the name of an experience by its ID.
+     *
+     * @param int $id The ID of the experience.
+     *
+     * @return string|null The name of the experience if found, null otherwise.
+     */
 
     public function getexpname($id)
     {
@@ -27,7 +38,13 @@ class expRep
         $name = $stmt->fetch(PDO::FETCH_OBJ);
         return $name->name;
     }
-
+    /**
+     * Retrieves details of an experience by its ID.
+     *
+     * @param int $id The ID of the experience.
+     *
+     * @return string|null Details of the experience if found, null otherwise.
+     */
     public function getexp($id)
     {
         $query = "SELECT * FROM {$this->table} WHERE id = :id;";
@@ -38,17 +55,31 @@ class expRep
         $result = $experience->name . ':>= ' . $experience->years;
         return $result;
     }
+    /**
+     * Retrieves IDs of experiences based on a condition.
+     *
+     * @param string $cond The condition to filter experiences.
+     *
+     * @return array An array containing IDs of experiences.
+     */
 
     public function getids($cond)
     {
         $query = "SELECT id FROM {$this->table} WHERE {$cond};";
-        $query = strtolower($query); // Not necessary, but can be used for consistency
+        $query = strtolower($query);
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $ids = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $ids;
     }
-
+    /**
+     * Adds a new experience if it doesn't exist in the database.
+     *
+     * @param string $name The name of the experience.
+     * @param int $years The years of experience.
+     *
+     * @return int|null The ID of the new experience if added, null otherwise.
+     */
     public function new($name, $years)
     {
         $query = "SELECT id FROM {$this->table} WHERE UPPER(name) = UPPER(:name1) AND years = :years ;";
@@ -77,7 +108,13 @@ class expRep
             return $id;
         }
     }
-
+    /**
+     * Retrieves the name and years of experience by its ID.
+     *
+     * @param int $id The ID of the experience.
+     *
+     * @return array|null An array containing the name and years of the experience if found, null otherwise.
+     */
     public function getnameyears($id)
     {
         $query = "SELECT * FROM {$this->table} WHERE id = :id;";
@@ -87,6 +124,14 @@ class expRep
         $name = $stmt->fetch(PDO::FETCH_OBJ);
         return array($name->name, $name->years);
     }
+    /**
+     * Retrieves the ID of an experience based on its name and years.
+     *
+     * @param string $name The name of the experience.
+     * @param int $years The years of experience.
+     *
+     * @return int|null The ID of the experience if found, null otherwise.
+     */
     public function test($name, $years)
     {
         $query = "SELECT id FROM {$this->table} WHERE UPPER(name) = UPPER(:name1) AND years = :years ;";

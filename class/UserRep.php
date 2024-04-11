@@ -31,11 +31,13 @@ class UserRep
     }
 
     /**
-     * allows user to create new account
-     * @param string $mail mail used
-     * @param string $pwd password  
-     * @param string $fname fullname
-     * @param string $type type of user can be either user or admin
+     * Sign up a new user.
+     *
+     * @param string $mail The email of the user.
+     * @param string $pwd The password of the user.
+     * @param string $fname The full name of the user.
+     * @param string $type The type of the user(can be either user or amdin).
+     * @return int Returns the ID of the newly created user if successful, or -1 if the email already exists.
      */
     public function signup(string $mail, string $pwd, string $fname, string $type)
     {
@@ -64,6 +66,12 @@ class UserRep
         }
     }
 
+    /**
+     * Retrieves a user from the database based on the provided ID.
+     *
+     * @param int $id The ID of the user to retrieve.
+     * @return array An array containing the user's full name, email, and experience details.
+     */
     public function getuser(int $id)
     {
         $query = "SELECT * FROM {$this->table} WHERE id = :id";
@@ -75,6 +83,16 @@ class UserRep
         return $lol;
     }
 
+    /**
+     * Updates the user information in the database.
+     *
+     * @param int $id The ID of the user.
+     * @param string $email The new email address of the user.
+     * @param string $name The new full name of the user.
+     * @param string $pwd The new password of the user.
+     * @param array $exps An array of new experiences for the user.
+     * @return int Returns 1 if the update was successful, -1 otherwise.
+     */
     public function change(int $id, string $email, string $name, string $pwd, array $exps)
     {
         $query = "SELECT * FROM {$this->table} WHERE email = :email";
@@ -109,6 +127,11 @@ class UserRep
         return 1;
     }
 
+    /**
+     * Retrieve all users from the database.
+     *
+     * @return array An array of user objects.
+     */
     public function getusers()
     {
         $query = "SELECT * FROM {$this->table}";
@@ -117,6 +140,12 @@ class UserRep
         return $users;
     }
 
+    /**
+     * Deletes a user from the database based on the provided ID.
+     *
+     * @param int $id The ID of the user to delete.
+     * @return void
+     */
     public function delete(int $id)
     {
         $query = "DELETE FROM {$this->table} WHERE id = :id";
