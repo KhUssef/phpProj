@@ -47,7 +47,7 @@ class UserRep
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_OBJ);
 
-        if ($user !== false) {
+        if ($user != false) {
             return -1;
         } else {
             $query = "SELECT * FROM {$this->table} ORDER BY id DESC LIMIT 1";

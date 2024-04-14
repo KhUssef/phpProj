@@ -90,7 +90,7 @@ $user = $users->getuser($_SESSION['id']);
             <input type="email" placeholder="Your email" value="<?= $user[1] ?>" class="input" name='email'>
             <input type="text" placeholder="Your full name" value="<?= $user[0] ?>" class="input" name='name'>
             <textarea placeholder="Your message" name='message'></textarea>
-            <input type="hidden" name="redirect" value="thankyou.php">
+            <input type="hidden" name="redirect" value="http://localhost:8000/thankyou.php">
             <button>Submit</button>
         </form>
     </div>

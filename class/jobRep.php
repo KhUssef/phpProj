@@ -69,7 +69,8 @@ class jobRep
                     array_push($poss_exp, $id->id);
                 }
             } else if ($exp == 'description') {
-                $query = $query . " description like :desc and ";
+                $query = $query . "( description like :desc) and ";
+                $desc = $temp;
             } else {
                 if (strpos($temp, 'and')) {
                     $exp = "(price " . substr($temp, 0, strpos($temp, 'and')) . ' and ' . " price " . substr($temp, strpos($temp, 'and') + 3, strlen($temp)) . ')';
@@ -97,7 +98,7 @@ class jobRep
         $query = strtolower($query);
         $stmt = $this->db->prepare($query);
         if (strpos($query, ":desc")) {
-            $stmt->bindValue(':desc', '%' . $temp . '%');
+            $stmt->bindValue(':desc', ('%' . $desc . '%'));
         }
         $stmt->execute();
         $jobs = $stmt->fetchAll(PDO::FETCH_OBJ);
