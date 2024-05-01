@@ -31,15 +31,16 @@ search.addEventListener("keypress", e => {
 })
 document.querySelector("body").addEventListener("keypress", e => {
   if (e.key == '/') {
+    e.preventDefault();
     search.select();
   }
 });
 filters.addEventListener("click", e => {
-  if (e.target.tagName.toLowerCase() === 'button') {
-    e.target.remove();
-    return;
+  var k = e.target;
+  while (k.tagName.toLowerCase() !== 'button') {
+    k = k.parentElement;
   }
-  e.target.parentElement.remove();
+  k.remove();
 });
 
 
@@ -66,7 +67,3 @@ searchbutton.addEventListener('click', e => {
 
   form.submit();
 });
-function idk() {
-  console.log('lol');
-  alert("lol");
-}

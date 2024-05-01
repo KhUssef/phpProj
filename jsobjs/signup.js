@@ -12,7 +12,7 @@ form.addEventListener('submit', e => {
     if (mail == '' || pwd == '' || pwdc == '' || fname == '') {
         e.preventDefault();
         alert("all fields must be filled");
-    } if (pwd != pwdc) {
+    } if (pwd !== pwdc) {
         e.preventDefault();
         alert("passwords dont match");
     }

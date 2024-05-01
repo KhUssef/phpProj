@@ -11,10 +11,9 @@ $user = $users->getuser($_SESSION['id']);
 $jobs = new jobRep();
 $job = $jobs->getjobbyid($_GET['id']);
 $exps = new expRep();
-$apps = new AppRep();
-$applist = $apps->getappsbyid($_GET['id']);
-if ($job->state == "inactive") {
-    header("Location:jobdetailsinactive.php?id={$_GET['id']}");
+$app = $users->getuser($job->employee);
+if ($job->state == "active") {
+    header("Location:applicants.php?id={$_GET['id']}");
 }
 ?>
 
@@ -90,8 +89,6 @@ if ($job->state == "inactive") {
         </div>
     </nav>
     <div class="main">
-        <?php for ($i = 0; $i < count($applist); $i++) {
-            $app = $users->getuser($applist[$i]); ?>
         <div class="card">
             <div class="infocard">
                 <h1 class="titlecard">
@@ -108,12 +105,8 @@ if ($job->state == "inactive") {
                     <?= $exps->getexp($app[4]) ?> years #
                     <?= $exps->getexp($app[5]) ?> years
                 </p>
-                <a href='accept.php?jid=<?= $job->id ?>&uid=<?= $applist[$i] ?>'> <button type="button"
-                        class="actioncard ">accept
-                    </button></a>
             </div>
         </div>
-        <?php } ?>
     </div>
     </div>
 
